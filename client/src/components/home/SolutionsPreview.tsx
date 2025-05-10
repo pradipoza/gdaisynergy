@@ -101,10 +101,10 @@ const SolutionsPreview = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           <Link href="/solutions">
-            <a className="inline-flex items-center text-primary hover:text-primary-dark font-medium text-lg">
+            <span className="inline-flex items-center text-primary hover:text-primary-dark font-medium text-lg cursor-pointer">
               Explore All Solutions
               <i className="fas fa-arrow-right ml-2"></i>
-            </a>
+            </span>
           </Link>
         </motion.div>
       </div>

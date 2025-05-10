@@ -34,10 +34,10 @@ const ServiceCard = ({ service, index }: { service: Service, index: number }) =>
         </p>
         <div className="flex items-center justify-between mt-4">
           <Link href={`/services/${service.id}`}>
-            <a className="text-primary font-medium flex items-center hover:underline" onClick={handleServiceClick}>
+            <span className="text-primary font-medium flex items-center hover:underline cursor-pointer" onClick={handleServiceClick}>
               Know More
               <i className="fas fa-arrow-right ml-1 text-sm"></i>
-            </a>
+            </span>
           </Link>
           <Link href="/lets-discuss">
             <Button className="bg-primary hover:bg-primary-dark text-white text-sm">
@@ -118,10 +118,10 @@ const ServicesPreview = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           <Link href="/services">
-            <a className="inline-flex items-center text-primary hover:text-primary-dark font-medium text-lg">
+            <span className="inline-flex items-center text-primary hover:text-primary-dark font-medium text-lg cursor-pointer">
               View All Services
               <i className="fas fa-arrow-right ml-2"></i>
-            </a>
+            </span>
           </Link>
         </motion.div>
       </div>

@@ -25,7 +25,7 @@ const ResourceCategory = ({
       transition={{ duration: 0.4, delay }}
     >
       <Link href={href}>
-        <a className="block bg-white/10 backdrop-blur-md rounded-xl p-6 transition-all duration-300 hover:bg-white/20 hover:shadow-lg border border-white/20">
+        <div className="block bg-white/10 backdrop-blur-md rounded-xl p-6 transition-all duration-300 hover:bg-white/20 hover:shadow-lg border border-white/20 cursor-pointer">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold">{title}</h3>
             <i className={`${icon} text-xl`}></i>
@@ -37,7 +37,7 @@ const ResourceCategory = ({
             {linkText}
             <i className="fas fa-arrow-right ml-2"></i>
           </span>
-        </a>
+        </div>
       </Link>
     </motion.div>
   );
@@ -143,10 +143,10 @@ const ResourcesPreview = () => {
                 ))}
               </div>
               <Link href={`/resources/${featured.id}`}>
-                <a className="inline-flex items-center bg-white text-primary font-medium py-2 px-6 rounded-full transition-colors hover:bg-opacity-90">
+                <span className="inline-flex items-center bg-white text-primary font-medium py-2 px-6 rounded-full transition-colors hover:bg-opacity-90 cursor-pointer">
                   Read Full {featured.type.replace('-', ' ')}
                   <i className="fas fa-arrow-right ml-2"></i>
-                </a>
+                </span>
               </Link>
             </div>
           </div>
