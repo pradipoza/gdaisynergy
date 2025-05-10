@@ -1,5 +1,5 @@
-import { useState, ReactNode } from 'react';
-import { Link, useLocation } from 'wouter';
+import { useState, ReactNode, useEffect } from 'react';
+import { Link, useLocation, useRoute } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
 import { 
   LayoutDashboard, 
@@ -12,9 +12,12 @@ import {
   Menu, 
   X, 
   LogOut, 
-  Home 
+  Home,
+  User
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useToast } from '@/hooks/use-toast';
 
 type SidebarItem = {
   label: string;
@@ -29,8 +32,23 @@ type AdminLayoutProps = {
 
 const AdminLayout = ({ children, title }: AdminLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [location] = useLocation();
-  const { logoutMutation } = useAuth();
+  const [location, navigate] = useLocation();
+  const { user, logoutMutation } = useAuth();
+  const { toast } = useToast();
+  
+  // Redirect non-admins to home page
+  useEffect(() => {
+    if (user && !user.isAdmin) {
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to access the admin area.",
+        variant: "destructive"
+      });
+      navigate("/");
+    } else if (!user) {
+      navigate("/auth");
+    }
+  }, [user, navigate, toast]);
 
   const sidebarItems: SidebarItem[] = [
     { label: 'Dashboard', href: '/admin/dashboard', icon: <LayoutDashboard className="w-5 h-5" /> },
@@ -73,8 +91,8 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
               {sidebarItems.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href}>
-                    <a
-                      className={`flex items-center px-4 py-2.5 rounded-md group transition-colors ${
+                    <div
+                      className={`flex items-center px-4 py-2.5 rounded-md group transition-colors cursor-pointer ${
                         location === item.href
                           ? 'bg-sidebar-accent text-sidebar-accent-foreground'
                           : 'text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground'
@@ -82,7 +100,7 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
                     >
                       {item.icon}
                       <span className="ml-3">{item.label}</span>
-                    </a>
+                    </div>
                   </Link>
                 </li>
               ))}
@@ -93,9 +111,11 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
           <div className="p-4 border-t border-sidebar-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <Link href="/" className="flex items-center px-4 py-2 text-sidebar-foreground hover:text-white transition-colors">
-                  <Home className="w-5 h-5 mr-2" />
-                  View Site
+                <Link href="/">
+                  <div className="flex items-center px-4 py-2 text-sidebar-foreground hover:text-white transition-colors cursor-pointer">
+                    <Home className="w-5 h-5 mr-2" />
+                    View Site
+                  </div>
                 </Link>
               </div>
               <button 
@@ -124,6 +144,21 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
               </button>
               <h1 className="ml-4 lg:ml-0 text-xl font-semibold text-gray-800">{title}</h1>
             </div>
+            
+            {/* User Profile */}
+            {user && (
+              <div className="flex items-center space-x-4">
+                <div className="text-right hidden md:block">
+                  <p className="text-sm font-medium text-gray-700">{user.username}</p>
+                  <p className="text-xs text-gray-500">{user.email || 'No email set'}</p>
+                </div>
+                <Avatar className="h-10 w-10 bg-primary text-white">
+                  <AvatarFallback>
+                    {user.username.substring(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </div>
+            )}
           </div>
         </header>
         

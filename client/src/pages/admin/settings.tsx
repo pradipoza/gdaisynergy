@@ -52,6 +52,7 @@ const AdminSettings = () => {
   
   // Account settings state
   const [username, setUsername] = useState(user?.username || "");
+  const [email, setEmail] = useState(user?.email || "");
   
   // Password change confirmation dialog
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
@@ -83,7 +84,7 @@ const AdminSettings = () => {
 
   // Update account settings mutation
   const updateAccountMutation = useMutation({
-    mutationFn: async (data: { username: string }) => {
+    mutationFn: async (data: { username: string, email: string }) => {
       const res = await apiRequest('PATCH', '/api/user', data);
       return res.json();
     },
