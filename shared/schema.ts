@@ -16,6 +16,7 @@ export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   email: true,
   password: true,
+  isAdmin: true,
 });
 
 // Services Table

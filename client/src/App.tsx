@@ -26,6 +26,7 @@ import AdminResources from "@/pages/admin/resources";
 import AdminMessages from "@/pages/admin/messages";
 import AdminInfo from "@/pages/admin/info";
 import AdminSettings from "@/pages/admin/settings";
+import AdminUsers from "@/pages/admin/users";
 
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";

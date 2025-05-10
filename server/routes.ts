@@ -1,13 +1,14 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth } from "./auth";
+import { setupAuth, hashPassword } from "./auth";
 import { ZodError } from "zod";
 import {
   insertServiceSchema,
   insertSolutionSchema,
   insertResourceSchema,
   insertMessageSchema,
+  InsertUser
 } from "@shared/schema";
 
 function isAdmin(req: Request, res: Response, next: Function) {
@@ -23,6 +24,136 @@ function isAdmin(req: Request, res: Response, next: Function) {
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up authentication routes
   setupAuth(app);
+  
+  // User management routes (admin only)
+  app.get("/api/users", isAdmin, async (req, res) => {
+    try {
+      // Get all users except the currently logged in user
+      const allUsers = await storage.getAllUsers();
+      // Remove password field for security
+      const users = allUsers.map(user => ({
+        ...user,
+        password: undefined
+      }));
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch users" });
+    }
+  });
+  
+  app.post("/api/users", isAdmin, async (req, res) => {
+    try {
+      const { username, email, password, isAdmin: userIsAdmin } = req.body;
+      
+      // Basic validation
+      if (!username || !email || !password) {
+        return res.status(400).json({ message: "Username, email and password are required" });
+      }
+      
+      // Check if username exists
+      const existingUsername = await storage.getUserByUsername(username);
+      if (existingUsername) {
+        return res.status(400).json({ message: "Username already exists" });
+      }
+      
+      // Check if email exists
+      const existingEmail = await storage.getUserByEmail(email);
+      if (existingEmail) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+      
+      // Create user
+      const user = await storage.createUser({
+        username,
+        email,
+        password: await hashPassword(password),
+        isAdmin: userIsAdmin || false
+      });
+      
+      // Remove password from response
+      const { password: _, ...userWithoutPassword } = user;
+      
+      res.status(201).json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create user" });
+    }
+  });
+  
+  app.patch("/api/users/:id", isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { username, email, password, isAdmin: userIsAdmin } = req.body;
+      
+      // Check if user exists
+      const user = await storage.getUser(id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Prepare update data
+      const updateData: Partial<InsertUser> = {};
+      
+      if (username) {
+        // Check if username is taken by another user
+        const existingUser = await storage.getUserByUsername(username);
+        if (existingUser && existingUser.id !== id) {
+          return res.status(400).json({ message: "Username already exists" });
+        }
+        updateData.username = username;
+      }
+      
+      if (email) {
+        // Check if email is taken by another user
+        const existingEmail = await storage.getUserByEmail(email);
+        if (existingEmail && existingEmail.id !== id) {
+          return res.status(400).json({ message: "Email already exists" });
+        }
+        updateData.email = email;
+      }
+      
+      if (password) {
+        updateData.password = await hashPassword(password);
+      }
+      
+      if (userIsAdmin !== undefined) {
+        updateData.isAdmin = userIsAdmin;
+      }
+      
+      // Update user
+      const updatedUser = await storage.updateUser(id, updateData);
+      
+      // Remove password from response
+      const { password: _, ...userWithoutPassword } = updatedUser;
+      
+      res.json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update user" });
+    }
+  });
+  
+  app.delete("/api/users/:id", isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      // Check if user exists
+      const user = await storage.getUser(id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Prevent deleting the current user
+      if (req.user.id === id) {
+        return res.status(400).json({ message: "Cannot delete your own account" });
+      }
+      
+      // Delete user
+      await storage.deleteUser(id);
+      
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete user" });
+    }
+  });
 
   // Track page views
   app.use(async (req, res, next) => {
