@@ -69,6 +69,7 @@ const AuthPage = () => {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
+      email: "",
       password: "",
       confirmPassword: "",
     },
@@ -187,6 +188,20 @@ const AuthPage = () => {
                         <FormLabel>Username</FormLabel>
                         <FormControl>
                           <Input placeholder="Choose a username" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={registerForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter your email" type="email" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
