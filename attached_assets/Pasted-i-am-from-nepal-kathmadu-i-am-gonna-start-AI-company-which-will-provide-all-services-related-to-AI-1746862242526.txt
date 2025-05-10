@@ -1,0 +1,96 @@
+i am from nepal , kathmadu i am gonna start AI company which will provide all services related to AI automation agency , AI software development , ai related consulting and AI related all typees of products and services  i wanna this company to run globally . so I am building this website which must have that high level quality , that can compitite to the already established leaders in AI market  
+
+
+
+
+
+ front end 
+Pages:
+1.Home: below the navbar there will be a featuring background image ,  powerful text about AI and AI automation and a botton “get started” which redirect 
+ then  to services pages after choosing any of service will be redirected to “lets discuss” page . 
+another button “whatsapp” which will redirect to whatsapp to msg admin 
+As Perview of each page will contain some content of those pages(for perview of services page 3 services will be shown )  and will redirect to the page on clicking on “readmore” will redirect to the page , perview means not just to show them but 
+make stunning layout for each pages perview as  . can be of different sizes and shape according to the page of which it is perview , make it suitable for that page 
+and design footer as per your idea 
+
+2.Services( drop down of all services name from navbar which are uploaded by admin while uploading that service )
+(services pages will contain all services with their perview , with two buttons 1. “know more”a and 2. “get service” , when person clicks “know more” will be redirected to next page with details of that service. and if the person clicks “get service”  will be redirected :
+(Lets discuss page)  where he can fill up form or can talk to  our team by clicking “talk to us in person” button  and 
+These each pages of detail will also have a botton “get service” which will also redirect them to same message page )
+3.Solutions :
+(same as services but “get service” will be changed to “get solution” )
+(
+Each service and solutions and thir content will be uploaded by admin.i mean totally dynamic.  for both services and solutions the way of uploading content will be same as of resources )
+4.Resources (all four catagories of resources will have saperate pages and on navbar will resources botton and all four topic will be shown in drop down on hovering on resources botton). )( each content will be uploaded by admin .content will be style rich not just title , image and description.  content will be style rich as written in ms word or google docs and that content will be converted in to html using text editor like quill and store in data base . in this way contents will rendered with perfect style )
+Blogs 
+News 
+Portfolios
+Case studies 
+(this four topic will be drop down from navbar on mouse hover on resources )
+5.About us 
+about company , some images , 
+Clients served , users, project we did,  solved problems with animated number counter and 
+our clients (popular  clients with logos  )
+6.Contact Us: all type of contact medium, (address, on map, contact informaton , all social medias ….  Add a inquiry form which will be sent to admin , and admin can see them in messages section 
+       7.  Lets discuss(message):
+there will a form about details of user and the services he wanna get and his contact details , 
+this sent msg can  be seen in message section of admin panel  by admin 
+          And there will also be some buttons  at right side of form 
+With title “talk to us in person” 
+          all social medias icons (whatsapp, messanger,instagram,linkedin, telegram).with proper                       design size , so that it will attention of user easily . On clicking the icon they will be redirected to   the …. respective …….
+
+
+
+ADMIN PANEL
+Pages:
+1.Dahboard : will contain real time analytics of site (visits ,, clicks to services , graphs for daily visits ……………………)
+2.Services 
+3.Solutions 
+4.Resources :
+Blogs 
+News 
+Portfolio
+Case studies 
+( each content of services , solutions , blogs, news, portfolio and case studies page will be uploaded by admin .content will be style rich not just title , image( image can be uploaded from local pc and  URL also can be used  )  and description , content will be style rich as written in ms word or google docs. content is copied to page in admin panel from where we are uploading content and    that content will be converted into html using text aditors like quill and stored in database . in this way contents will rendered with perfect style )
+(I mean each component of content will be designed by admin ) 
+(admin can add, delete , edit or update  each of these content )
+5. message: admin can see all msgs sent by visitor from “let’s discuss” page and from inquiry form of  contact  us pages 
+
+6.Our  info :
+About us 
+Contact us
+(all the data which are asked to be shown in frontend in about us and contact us section will be uploaded here )
+
+
+7.Settings 
+
+(remember:  each content of services , solutions , blogs, news, portifolio and case studeis will be uploaded by admin and it must be style rich so add feature rich text editor like quill)
+(every type of contnet will stored in data base )  
+Use proper authentication for admin , 
+Tech stacks :
+React for front end 
+Nodejs , expressjs for backend 
+Postgresql database 
+And other framework and packages a you need to build this all features 
+
+
+( it has not much functionalities but make it very stunning in design , both its layout , imean structure and the content uploaded , should look so …………..) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
