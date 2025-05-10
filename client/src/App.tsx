@@ -55,6 +55,7 @@ function Router() {
       <ProtectedRoute path="/admin/resources" component={AdminResources} />
       <ProtectedRoute path="/admin/messages" component={AdminMessages} />
       <ProtectedRoute path="/admin/info" component={AdminInfo} />
+      <ProtectedRoute path="/admin/users" component={AdminUsers} />
       <ProtectedRoute path="/admin/settings" component={AdminSettings} />
       
       {/* Fallback to 404 */}
