@@ -48,9 +48,16 @@ export function setupAuth(app: Express) {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       try {
-        const user = await storage.getUserByUsername(username);
+        // Try to find user by username or email
+        let user = await storage.getUserByUsername(username);
+        
+        // If not found by username, try email
+        if (!user) {
+          user = await storage.getUserByEmail(username);
+        }
+        
         if (!user || !(await comparePasswords(password, user.password))) {
-          return done(null, false, { message: "Invalid username or password" });
+          return done(null, false, { message: "Invalid username, email or password" });
         } else {
           return done(null, user);
         }
@@ -72,9 +79,21 @@ export function setupAuth(app: Express) {
 
   app.post("/api/register", async (req, res, next) => {
     try {
-      const existingUser = await storage.getUserByUsername(req.body.username);
-      if (existingUser) {
+      // Check if username exists
+      const existingUsername = await storage.getUserByUsername(req.body.username);
+      if (existingUsername) {
         return res.status(400).json({ message: "Username already exists" });
+      }
+      
+      // Check if email exists
+      const existingEmail = await storage.getUserByEmail(req.body.email);
+      if (existingEmail) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+
+      // Validate required fields
+      if (!req.body.username || !req.body.email || !req.body.password) {
+        return res.status(400).json({ message: "Username, email and password are required" });
       }
 
       const user = await storage.createUser({
