@@ -141,9 +141,20 @@ const AdminSettings = () => {
       });
       return;
     }
+    
+    // Basic email validation
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     updateAccountMutation.mutate({
       username,
+      email,
     });
   };
 
@@ -209,10 +220,10 @@ const AdminSettings = () => {
                       <Input 
                         id="email" 
                         type="email" 
-                        value="admin@nepalai.com" 
-                        disabled 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
-                      <p className="text-xs text-muted-foreground">Email cannot be changed</p>
+                      <p className="text-xs text-muted-foreground">Used for account recovery and notifications</p>
                     </div>
                   </div>
                 </div>

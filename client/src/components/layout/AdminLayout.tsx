@@ -57,6 +57,7 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
     { label: 'Resources', href: '/admin/resources', icon: <FileText className="w-5 h-5" /> },
     { label: 'Messages', href: '/admin/messages', icon: <MessageSquare className="w-5 h-5" /> },
     { label: 'Company Info', href: '/admin/info', icon: <Info className="w-5 h-5" /> },
+    { label: 'Users', href: '/admin/users', icon: <User className="w-5 h-5" /> },
     { label: 'Settings', href: '/admin/settings', icon: <Settings className="w-5 h-5" /> },
   ];
 

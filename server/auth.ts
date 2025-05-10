@@ -133,4 +133,80 @@ export function setupAuth(app: Express) {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     res.json(req.user);
   });
+  
+  // Update user profile (username and email)
+  app.patch("/api/user", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
+      const { username, email } = req.body;
+      
+      // Validate username
+      if (!username || username.length < 3) {
+        return res.status(400).json({ message: "Username must be at least 3 characters long" });
+      }
+      
+      // Validate email format if provided
+      if (email && !/^\S+@\S+\.\S+$/.test(email)) {
+        return res.status(400).json({ message: "Invalid email format" });
+      }
+      
+      // Check if username is taken by another user
+      const existingUser = await storage.getUserByUsername(username);
+      if (existingUser && existingUser.id !== req.user.id) {
+        return res.status(400).json({ message: "Username already exists" });
+      }
+      
+      // Check if email is taken by another user
+      if (email) {
+        const existingEmail = await storage.getUserByEmail(email);
+        if (existingEmail && existingEmail.id !== req.user.id) {
+          return res.status(400).json({ message: "Email already exists" });
+        }
+      }
+      
+      // Update user in storage
+      const user = await storage.updateUser(req.user.id, { username, email });
+      
+      // Update the session
+      req.login(user, (err) => {
+        if (err) return next(err);
+        res.json(user);
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  // Change password
+  app.post("/api/user/change-password", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
+      const { currentPassword, newPassword } = req.body;
+      
+      // Check if current password is correct
+      if (!(await comparePasswords(currentPassword, req.user.password))) {
+        return res.status(400).json({ message: "Current password is incorrect" });
+      }
+      
+      // Validate new password
+      if (!newPassword || newPassword.length < 8) {
+        return res.status(400).json({ message: "New password must be at least 8 characters long" });
+      }
+      
+      // Update password
+      const user = await storage.updateUser(req.user.id, {
+        password: await hashPassword(newPassword)
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  });
 }
