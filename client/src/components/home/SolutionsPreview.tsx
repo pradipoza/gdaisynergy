@@ -12,18 +12,18 @@ const SolutionCard = ({ solution, index }: { solution: Solution, index: number }
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/60 to-accent/60 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center">
         <div className="text-white text-center p-6 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
           <h3 className="text-2xl font-bold mb-3">{solution.title}</h3>
-          <p className="mb-4">{solution.description}</p>
+          <p className="mb-4 line-clamp-5 text-white">{solution.description}</p>
           <div className="flex justify-center space-x-4">
             <Link href={`/solutions/${solution.id}`}>
-              <Button variant="secondary" className="bg-white text-primary font-medium hover:bg-opacity-90 transition-colors">
+              <Button variant="secondary" className="bg-white text-black font-medium hover:bg-neutral-200 transition-colors">
                 Know More
               </Button>
             </Link>
             <Link href="/lets-discuss">
-              <Button variant="secondary" className="bg-accent text-white font-medium hover:bg-accent-dark transition-colors">
+              <Button variant="secondary" className="bg-primary text-white font-medium hover:bg-primary-dark transition-colors">
                 Get Solution
               </Button>
             </Link>
@@ -36,7 +36,7 @@ const SolutionCard = ({ solution, index }: { solution: Solution, index: number }
         className="w-full h-72 md:h-96 object-cover transition-transform duration-300 group-hover:scale-105"
       />
       <div className="p-6 z-20 relative bg-white">
-        <h3 className="text-xl font-semibold">{solution.title}</h3>
+        <h3 className="text-xl font-semibold text-neutral-900">{solution.title}</h3>
       </div>
     </motion.div>
   );
@@ -70,11 +70,11 @@ const SolutionsPreview = () => {
     }
   ];
 
-  // If loading, show defaultSolutions, otherwise show actual solutions (limited to 2 for preview)
-  const displaySolutions = isLoading || !solutions ? defaultSolutions : solutions.slice(0, 2);
+  // Show 3 solutions in the preview
+  const displaySolutions = isLoading || !solutions ? defaultSolutions : solutions.slice(0, 3);
 
   return (
-    <section id="solutions" className="py-16 md:py-24 px-4">
+    <section id="solutions" className="py-16 md:py-24 px-4 bg-gradient-to-br from-neutral-900 via-blue-950/80 to-indigo-950/90">
       <div className="container mx-auto">
         <motion.div 
           className="text-center mb-16"
@@ -88,7 +88,7 @@ const SolutionsPreview = () => {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 justify-items-center">
           {displaySolutions.map((solution, index) => (
             <SolutionCard key={solution.id} solution={solution} index={index} />
           ))}

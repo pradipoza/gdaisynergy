@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useRoute, useLocation } from "wouter";
 import { Service } from "@shared/schema";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { ChevronLeft, Loader2, ArrowRight } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 const ServiceDetailPage = () => {
@@ -116,7 +116,7 @@ const ServiceDetailPage = () => {
                       <Button className="w-full mb-4">Get Started</Button>
                     </Link>
                     <a 
-                      href="https://wa.me/1234567890"
+                      href="https://wa.me/9779767952043"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center w-full bg-[#25D366] hover:bg-[#128C7E] text-white py-2 px-4 rounded-md transition-colors"
@@ -152,8 +152,6 @@ const ServiceDetailPage = () => {
             )}
           </div>
         </main>
-        
-        <Footer />
       </div>
     </>
   );

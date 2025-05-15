@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useRoute, useLocation } from "wouter";
 import { Solution } from "@shared/schema";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -116,7 +116,7 @@ const SolutionDetailPage = () => {
                       <Button className="w-full mb-4">Get Solution</Button>
                     </Link>
                     <a 
-                      href="https://wa.me/1234567890"
+                      href="https://wa.me/9779767952043"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center w-full bg-[#25D366] hover:bg-[#128C7E] text-white py-2 px-4 rounded-md transition-colors"
@@ -130,19 +130,27 @@ const SolutionDetailPage = () => {
                       <ul className="space-y-2">
                         <li className="flex items-start">
                           <i className="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                          <span>Enterprise process optimization</span>
+                          <span>Healthcare - Predictive diagnostics and patient care optimization</span>
                         </li>
                         <li className="flex items-start">
                           <i className="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                          <span>Healthcare data management</span>
+                          <span>Finance - AI-powered fraud detection and risk assessment</span>
                         </li>
                         <li className="flex items-start">
                           <i className="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                          <span>Financial risk analysis</span>
+                          <span>Manufacturing - Predictive maintenance and quality control</span>
                         </li>
                         <li className="flex items-start">
                           <i className="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                          <span>Retail customer experience</span>
+                          <span>Retail - Personalized recommendations and inventory optimization</span>
+                        </li>
+                        <li className="flex items-start">
+                          <i className="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                          <span>Agriculture - Crop monitoring and yield prediction</span>
+                        </li>
+                        <li className="flex items-start">
+                          <i className="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                          <span>Energy - Smart grid management and consumption forecasting</span>
                         </li>
                       </ul>
                     </div>
@@ -153,7 +161,7 @@ const SolutionDetailPage = () => {
                         <div className="w-full bg-gray-200 rounded-full h-2.5">
                           <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '95%' }}></div>
                         </div>
-                        <span className="ml-2 text-sm font-medium">95%</span>
+                        <span className="ml-2 text-sm font-medium">99.9%</span>
                       </div>
                       <p className="text-sm mt-2 text-neutral-600">
                         Based on our implementation success across similar industries.
@@ -165,8 +173,6 @@ const SolutionDetailPage = () => {
             )}
           </div>
         </main>
-        
-        <Footer />
       </div>
     </>
   );

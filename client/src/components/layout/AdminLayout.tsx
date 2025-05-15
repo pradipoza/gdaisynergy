@@ -73,10 +73,12 @@ const AdminLayout = ({ children, title }: AdminLayoutProps) => {
           {/* Sidebar Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-sidebar-border">
             <Link href="/admin/dashboard" className="flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold">
-                <span className="text-sm">N</span>
-              </div>
-              <span className="ml-2 font-bold text-white">NepalAI Admin</span>
+              <img 
+                src="/assets/logo.png" 
+                alt="GD AI Synergy Logo" 
+                className="h-8 w-auto rounded-lg"
+              />
+              <span className="ml-2 font-bold text-white">GD AI Synergy Admin</span>
             </Link>
             <button 
               onClick={() => setIsSidebarOpen(false)} 

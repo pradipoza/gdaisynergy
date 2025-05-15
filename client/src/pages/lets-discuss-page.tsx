@@ -1,14 +1,15 @@
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import DiscussForm from "@/components/forms/DiscussForm";
+import AIStatsHighlight from "@/components/discuss/AIStatsHighlight";
 import { motion } from "framer-motion";
+import { Facebook, Instagram, Linkedin, Send } from "lucide-react";
 
 const LetsDiscussPage = () => {
   return (
     <>
       <Helmet>
-        <title>Let's Discuss Your AI Project | NepalAI</title>
+        <title>Let's Discuss Your AI Project | GD AI Synergy</title>
         <meta name="description" content="Tell us about your business challenges and goals. Our team will analyze your needs and suggest the most effective AI solutions." />
       </Helmet>
 
@@ -27,7 +28,10 @@ const LetsDiscussPage = () => {
                 Let's Discuss Your AI Project
               </motion.h1>
               
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+              {/* AI Stats Highlight */}
+              <AIStatsHighlight />
+              
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mt-16">
                 <motion.div 
                   className="lg:col-span-3"
                   initial={{ opacity: 0, x: -20 }}
@@ -54,60 +58,80 @@ const LetsDiscussPage = () => {
                     </p>
                     
                     <div className="space-y-4">
-                      <a 
-                        href="https://wa.me/1234567890" 
+                      <motion.a 
+                        href="https://wa.me/9779767952043" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center p-4 bg-[#25D366] rounded-lg hover:bg-opacity-90 transition-colors"
+                        className="group flex items-center p-4 bg-gradient-to-r from-[#25D366] to-[#128C7E] rounded-xl hover:shadow-lg hover:shadow-[#25D366]/20 transition-all duration-300 overflow-hidden relative"
+                        whileHover={{ scale: 1.02 }}
                       >
-                        <i className="fab fa-whatsapp text-2xl mr-4"></i>
-                        <div>
-                          <div className="font-medium">WhatsApp</div>
-                          <div className="text-sm opacity-80">Quick chat with our team</div>
+                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="relative z-10 flex items-center justify-center w-12 h-12 mr-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <i className="fab fa-whatsapp text-2xl text-white"></i>
                         </div>
-                      </a>
+                        <div>
+                          <div className="font-medium text-white">WhatsApp</div>
+                          <div className="text-sm text-white/80">Quick chat with our team</div>
+                        </div>
+                        <i className="fas fa-arrow-right ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-white/70"></i>
+                      </motion.a>
                       
-                      <a 
-                        href="https://m.me/nepalai" 
+                      <motion.a 
+                        href="https://m.me/634830789719281?source=qr_link_share" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center p-4 bg-[#0084FF] rounded-lg hover:bg-opacity-90 transition-colors"
+                        className="group flex items-center p-4 bg-gradient-to-r from-[#0084FF] to-[#0064CE] rounded-xl hover:shadow-lg hover:shadow-[#0084FF]/20 transition-all duration-300 overflow-hidden relative"
+                        whileHover={{ scale: 1.02 }}
                       >
-                        <i className="fab fa-facebook-messenger text-2xl mr-4"></i>
-                        <div>
-                          <div className="font-medium">Messenger</div>
-                          <div className="text-sm opacity-80">Connect on Facebook</div>
+                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="relative z-10 flex items-center justify-center w-12 h-12 mr-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <i className="fab fa-facebook-messenger text-2xl text-white"></i>
                         </div>
-                      </a>
+                        <div>
+                          <div className="font-medium text-white">Messenger</div>
+                          <div className="text-sm text-white/80">Connect on Facebook</div>
+                        </div>
+                        <i className="fas fa-arrow-right ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-white/70"></i>
+                      </motion.a>
                       
-                      <a 
-                        href="https://instagram.com/nepalai" 
+                      <motion.a 
+                        href="https://www.instagram.com/gdaisynergy_/" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center p-4 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] rounded-lg hover:bg-opacity-90 transition-colors"
+                        className="group flex items-center p-4 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] rounded-xl hover:shadow-lg hover:shadow-[#FD1D1D]/20 transition-all duration-300 overflow-hidden relative"
+                        whileHover={{ scale: 1.02 }}
                       >
-                        <i className="fab fa-instagram text-2xl mr-4"></i>
-                        <div>
-                          <div className="font-medium">Instagram</div>
-                          <div className="text-sm opacity-80">Follow our projects</div>
+                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="relative z-10 flex items-center justify-center w-12 h-12 mr-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <i className="fab fa-instagram text-2xl text-white"></i>
                         </div>
-                      </a>
+                        <div>
+                          <div className="font-medium text-white">Instagram</div>
+                          <div className="text-sm text-white/80">Follow our projects</div>
+                        </div>
+                        <i className="fas fa-arrow-right ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-white/70"></i>
+                      </motion.a>
                       
-                      <a 
-                        href="https://linkedin.com/company/nepalai" 
+                      <motion.a 
+                        href="https://www.linkedin.com/company/gd-ai-synergy" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center p-4 bg-[#0077B5] rounded-lg hover:bg-opacity-90 transition-colors"
+                        className="group flex items-center p-4 bg-gradient-to-r from-[#0077B5] to-[#005F91] rounded-xl hover:shadow-lg hover:shadow-[#0077B5]/20 transition-all duration-300 overflow-hidden relative"
+                        whileHover={{ scale: 1.02 }}
                       >
-                        <i className="fab fa-linkedin text-2xl mr-4"></i>
-                        <div>
-                          <div className="font-medium">LinkedIn</div>
-                          <div className="text-sm opacity-80">Professional connection</div>
+                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="relative z-10 flex items-center justify-center w-12 h-12 mr-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <i className="fab fa-linkedin-in text-2xl text-white"></i>
                         </div>
-                      </a>
+                        <div>
+                          <div className="font-medium text-white">LinkedIn</div>
+                          <div className="text-sm text-white/80">Connect professionally</div>
+                        </div>
+                        <i className="fas fa-arrow-right ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-white/70"></i>
+                      </motion.a>
                       
                       <a 
-                        href="https://t.me/nepalai" 
+                        href="https://t.me/gdaisynergy" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="flex items-center p-4 bg-[#0088CC] rounded-lg hover:bg-opacity-90 transition-colors"
@@ -185,19 +209,19 @@ const LetsDiscussPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[
                   {
-                    quote: "NepalAI transformed our business operations with their automated data processing solution. We've seen a 40% increase in efficiency.",
-                    author: "Raj Patel",
-                    company: "TechSolutions Inc."
+                    quote: "GD AI Synergy's chatbot solution revolutionized our customer support. Response times improved by 80% while reducing our support costs by 60%. The AI handles 70% of inquiries without human intervention.",
+                    author: "Sarah Johnson",
+                    company: "E-Commerce Platform"
                   },
                   {
-                    quote: "The healthcare AI solution developed by NepalAI has significantly improved our diagnostic accuracy and patient care.",
-                    author: "Dr. Sarah Chen",
-                    company: "Global Medical Center"
+                    quote: "Their AI automation services transformed our workflow. What used to take days now happens in minutes. The team's expertise in process automation is truly impressive.",
+                    author: "David Kim",
+                    company: "Logistics Firm"
                   },
                   {
-                    quote: "Working with NepalAI has been a game-changer for our financial services. Their AI models have reduced fraud by 65%.",
-                    author: "Michael Johnson",
-                    company: "Financial Trust Ltd."
+                    quote: "The custom AI solution they built for our SaaS platform gave us a competitive edge. Their team's ability to understand complex requirements and deliver scalable AI solutions is remarkable.",
+                    author: "Priya Thapa",
+                    company: "Tech Startup"
                   }
                 ].map((testimonial, index) => (
                   <motion.div
@@ -232,20 +256,24 @@ const LetsDiscussPage = () => {
               <div className="max-w-3xl mx-auto divide-y divide-neutral-200">
                 {[
                   {
-                    question: "How long does it typically take to implement an AI solution?",
-                    answer: "Implementation timeframes vary based on project complexity. Simple automations may take 2-4 weeks, while comprehensive solutions might require 2-3 months. We'll provide you with a specific timeline during our initial consultation."
+                    question: "How long does it take to implement an AI chatbot or automation solution?",
+                    answer: "Implementation time varies by project scope. Basic chatbot deployments can be live in 2-3 weeks, while complex AI automation solutions typically take 4-8 weeks. We provide a detailed timeline after understanding your specific requirements."
                   },
                   {
-                    question: "What industries do you specialize in?",
-                    answer: "We have expertise across multiple sectors including healthcare, finance, retail, manufacturing, and enterprise solutions. Our team adapts AI technologies to meet the specific needs of each industry."
+                    question: "What messaging platforms do your chatbots support?",
+                    answer: "Our AI chatbots integrate with all major platforms including WhatsApp, Facebook Messenger, Instagram, Telegram, and custom web chat. We can also integrate with your existing CRM or support systems."
                   },
                   {
-                    question: "Do I need to have technical knowledge to work with you?",
-                    answer: "No technical knowledge is required. Our team will guide you through the entire process, explaining concepts in clear terms and handling all technical aspects of implementation."
+                    question: "Do I need technical expertise to manage the AI solutions?",
+                    answer: "Not at all! Our solutions are designed for ease of use. We provide a user-friendly dashboard for managing your chatbots and automations, along with comprehensive training and 24/7 support."
                   },
                   {
-                    question: "What kind of support do you provide after deployment?",
-                    answer: "We offer comprehensive post-deployment support including system monitoring, maintenance, updates, and ongoing optimization. We also provide training for your team to maximize the value of your AI solution."
+                    question: "What kind of support do you offer after deployment?",
+                    answer: "We provide ongoing support including 24/7 monitoring, regular updates, and performance optimization. Our team is always available to help with any questions or adjustments you need to make to your AI solutions."
+                  },
+                  {
+                    question: "Can you customize the AI solutions for my specific business needs?",
+                    answer: "Absolutely! We specialize in custom AI solutions tailored to your unique business requirements. Our team will work closely with you to understand your workflow and create a solution that fits perfectly."
                   }
                 ].map((faq, index) => (
                   <motion.div
@@ -263,8 +291,6 @@ const LetsDiscussPage = () => {
             </div>
           </section>
         </main>
-        
-        <Footer />
       </div>
     </>
   );

@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useRoute } from "wouter";
 import { Resource } from "@shared/schema";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -74,20 +73,27 @@ const ResourcesPage = () => {
   return (
     <>
       <Helmet>
-        <title>AI Resources & Insights | NepalAI</title>
+        <title>AI Resources & Insights | GD AI Synergy</title>
         <meta name="description" content="Explore our collection of AI resources including blogs, news, portfolios, and case studies to stay updated with the latest AI trends and insights." />
       </Helmet>
 
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-neutral-950">
         <Navbar />
         
         <main className="flex-grow pt-24 pb-16">
           {/* Hero Section */}
-          <section className="bg-gradient-to-r from-primary to-secondary text-white py-16 md:py-24">
-            <div className="container mx-auto px-4">
+          <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-indigo-950/80 via-purple-950/70 to-blue-950/80">
+            {/* Background Effects */}
+            <div className="absolute inset-0 z-0">
+              <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-br from-indigo-800/40 via-purple-800/30 to-pink-800/40 rounded-full blur-[120px] transform translate-x-1/2 -translate-y-1/2"></div>
+              <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-gradient-to-tr from-emerald-800/40 via-cyan-800/30 to-blue-800/40 rounded-full blur-[120px] transform -translate-x-1/2 translate-y-1/2"></div>
+              <div className="absolute inset-0 bg-[url('/assets/images/grid.svg')] opacity-10"></div>
+              <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-b from-transparent to-neutral-900 pointer-events-none"></div>
+            </div>
+            <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-3xl mx-auto text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">AI Resources & Insights</h1>
-                <p className="text-lg md:text-xl opacity-90 mb-8">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-purple-400 to-pink-300">AI Resources & Insights</h1>
+                <p className="text-lg md:text-xl text-neutral-200 mb-8">
                   Stay updated with the latest trends, case studies, and insights from our AI experts
                 </p>
               </div>
@@ -95,8 +101,10 @@ const ResourcesPage = () => {
           </section>
 
           {/* Resources Tabs */}
-          <section className="py-16">
-            <div className="container mx-auto px-4">
+          <section className="relative py-20 bg-gradient-to-br from-neutral-900 via-blue-950/80 to-indigo-950/90">
+            <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-t from-transparent to-indigo-950/80 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-b from-transparent to-indigo-700/80 pointer-events-none"></div>
+            <div className="container mx-auto px-4 relative z-10">
               <Tabs defaultValue={activeTab} value={activeTab} onValueChange={(value) => setActiveTab(value)}>
                 <div className="flex justify-center mb-12">
                   <TabsList className="bg-neutral-100">
@@ -121,7 +129,7 @@ const ResourcesPage = () => {
                 <TabsContent value={activeTab}>
                   {isLoading ? (
                     <div className="flex justify-center items-center min-h-[40vh]">
-                      <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                      <Loader2 className="h-12 w-12 animate-spin text-indigo-500" />
                     </div>
                   ) : error ? (
                     <div className="text-center p-12 bg-red-50 rounded-lg">
@@ -130,7 +138,7 @@ const ResourcesPage = () => {
                     </div>
                   ) : !resources || resources.length === 0 ? (
                     <div className="text-center p-12 bg-blue-50 rounded-lg">
-                      <FileText className="h-12 w-12 text-primary mx-auto mb-4" />
+                      <FileText className="h-12 w-12 text-indigo-500 mx-auto mb-4" />
                       <h3 className="text-xl font-semibold mb-2">No resources available</h3>
                       <p className="text-neutral-600 mb-4">
                         We're currently adding new content to this section. Please check back soon.
@@ -138,55 +146,51 @@ const ResourcesPage = () => {
                     </div>
                   ) : (
                     <motion.div 
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                      className="space-y-12"
                       variants={container}
                       initial="hidden"
                       animate="show"
                     >
-                      {resources.map((resource) => (
+                      {resources.map((resource, idx) => (
                         <motion.div key={resource.id} variants={item}>
-                          <Card className="h-full overflow-hidden hover:shadow-md transition-shadow">
-                            <div className="h-48 overflow-hidden relative">
+                          <div className="flex flex-col md:flex-row bg-gradient-to-br from-neutral-800 via-neutral-900 to-neutral-950 border border-indigo-900/30 rounded-2xl shadow-lg hover:shadow-indigo-950/20 transition-all duration-300 overflow-hidden">
+                            {/* Image left */}
+                            <div className="md:w-1/3 w-full flex-shrink-0 overflow-hidden flex items-center justify-center bg-neutral-900">
                               <img 
                                 src={resource.imageUrl || `https://source.unsplash.com/random/800x600/?ai,technology,${resource.id}`} 
                                 alt={resource.title} 
-                                className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                                className="w-full max-h-80 object-contain transition-transform hover:scale-105 duration-300"
                               />
-                              <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold uppercase px-3 py-1">
-                                {formatResourceType(resource.type)}
-                              </div>
-                              {resource.featured && (
-                                <div className="absolute bottom-0 left-0 bg-accent text-white text-xs font-bold px-3 py-1">
-                                  Featured
-                                </div>
-                              )}
                             </div>
-                            <CardContent className="p-6">
-                              <div className="flex items-center mb-2 text-sm text-neutral-500">
-                                <i className="far fa-calendar-alt mr-2"></i>
-                                <span>{format(new Date(resource.createdAt), 'MMM d, yyyy')}</span>
-                              </div>
-                              <h2 className="text-xl font-semibold mb-3">{resource.title}</h2>
-                              <p className="text-neutral-600 mb-4">{resource.description}</p>
-                              
-                              {resource.tags && resource.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                  {resource.tags.map((tag, index) => (
-                                    <span key={index} className="bg-neutral-100 text-xs py-1 px-2 rounded-full">
-                                      {tag}
-                                    </span>
-                                  ))}
+                            {/* Content right */}
+                            <div className="flex-1 p-8 flex flex-col justify-between">
+                              <div>
+                                <div className="flex items-center mb-2 text-sm text-neutral-400">
+                                  <i className="far fa-calendar-alt mr-2"></i>
+                                  <span>{resource.createdAt ? format(new Date(resource.createdAt), 'MMM d, yyyy') : 'Date not available'}</span>
                                 </div>
-                              )}
-                              
-                              <Link href={`/resources/${resource.id}`}>
-                                <a className="text-primary font-medium flex items-center hover:underline">
-                                  Read More
-                                  <i className="fas fa-arrow-right ml-1 text-sm"></i>
-                                </a>
-                              </Link>
-                            </CardContent>
-                          </Card>
+                                <h2 className="text-2xl font-semibold mb-3 text-neutral-100">{resource.title}</h2>
+                                <div className="prose prose-invert max-w-none text-neutral-300 mb-4 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: resource.content }} />
+                                {resource.tags && resource.tags.length > 0 && (
+                                  <div className="flex flex-wrap gap-2 mb-4">
+                                    {resource.tags.map((tag, index) => (
+                                      <span key={index} className="bg-neutral-700 text-xs py-1 px-2 rounded-full text-indigo-200">
+                                        {tag}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-4 mt-4">
+                                <Link href={`/resources/${resource.id}`}>
+                                  <span className="text-indigo-300 font-medium flex items-center hover:underline cursor-pointer">
+                                    Read More
+                                    <i className="fas fa-arrow-right ml-1 text-sm"></i>
+                                  </span>
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
                         </motion.div>
                       ))}
                     </motion.div>
@@ -216,8 +220,6 @@ const ResourcesPage = () => {
             </div>
           </section>
         </main>
-        
-        <Footer />
       </div>
     </>
   );

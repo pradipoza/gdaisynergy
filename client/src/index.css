@@ -56,3 +56,8 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+/* Hide caret globally except for input, textarea, and contenteditable elements */
+*:not(input):not(textarea):not([contenteditable="true"]) {
+  caret-color: transparent !important;
+}

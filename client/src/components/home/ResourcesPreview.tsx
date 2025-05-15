@@ -9,7 +9,8 @@ const ResourceCategory = ({
   description, 
   href, 
   linkText, 
-  delay 
+  delay,
+  gradient
 }: { 
   title: string; 
   icon: string; 
@@ -17,6 +18,7 @@ const ResourceCategory = ({
   href: string; 
   linkText: string;
   delay: number;
+  gradient: string;
 }) => {
   return (
     <motion.div
@@ -25,18 +27,23 @@ const ResourceCategory = ({
       transition={{ duration: 0.4, delay }}
     >
       <Link href={href}>
-        <div className="block bg-white/10 backdrop-blur-md rounded-xl p-6 transition-all duration-300 hover:bg-white/20 hover:shadow-lg border border-white/20 cursor-pointer">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold">{title}</h3>
-            <i className={`${icon} text-xl`}></i>
+        <div className="group relative bg-white/5 backdrop-blur-lg rounded-3xl p-8 transition-all duration-300 hover:bg-white/10 border border-white/10 hover:border-white/20 cursor-pointer overflow-hidden">
+          {/* Gradient overlay */}
+          <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${gradient}`}></div>
+          
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-white">{title}</h3>
+              <i className={`${icon} text-2xl bg-clip-text text-transparent ${gradient}`}></i>
+            </div>
+            <p className="text-gray-300 text-sm mb-6 line-clamp-5">
+              {description}
+            </p>
+            <span className="text-sm font-medium text-white inline-flex items-center group-hover:translate-x-2 transition-transform duration-300">
+              {linkText}
+              <i className="fas fa-arrow-right ml-2"></i>
+            </span>
           </div>
-          <p className="text-sm opacity-90 mb-4">
-            {description}
-          </p>
-          <span className="text-sm font-medium flex items-center">
-            {linkText}
-            <i className="fas fa-arrow-right ml-2"></i>
-          </span>
         </div>
       </Link>
     </motion.div>
@@ -56,7 +63,7 @@ const ResourcesPreview = () => {
     title: 'AI in Finance: Transforming the Banking Industry',
     description: 'Learn how our AI solutions helped a leading bank reduce operational costs by 35% while improving customer satisfaction scores.',
     content: 'Learn how our AI solutions helped a leading bank reduce operational costs by 35% while improving customer satisfaction scores. This comprehensive case study details the implementation process, challenges overcome, and measurable results achieved.',
-    imageUrl: 'https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=1200&q=80',
+    imageUrl: '/assets/images/resources/featured-case-study.jpg',
     tags: ['Banking', 'Machine Learning', 'Process Automation', 'Customer Experience'],
     featured: true,
     createdAt: new Date(),
@@ -66,16 +73,25 @@ const ResourcesPreview = () => {
   const featured = featuredResource && featuredResource.length > 0 ? featuredResource[0] : defaultFeatured;
 
   return (
-    <section id="resources" className="py-16 md:py-24 bg-gradient-to-r from-primary to-secondary text-white px-4">
-      <div className="container mx-auto">
+    <section id="resources" className="py-20 md:py-32 px-4 bg-[#0A0F1C] relative overflow-hidden">
+      {/* Modern gradient background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#2563EB]/10 rounded-full blur-[120px] transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-[#7C3AED]/10 rounded-full blur-[120px] transform -translate-x-1/2 translate-y-1/2"></div>
+        <div className="absolute inset-0 bg-[url('/assets/images/grid.svg')] opacity-10"></div>
+      </div>
+
+      <div className="container mx-auto relative z-10 max-w-7xl">
         <motion.div 
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Resources & Insights</h2>
-          <p className="text-lg opacity-90 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 tracking-tight">
+            AI Resources & Insights
+          </h2>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Stay updated with the latest trends, case studies, and insights from our AI experts
           </p>
         </motion.div>
@@ -88,6 +104,7 @@ const ResourcesPreview = () => {
             href="/resources/blog" 
             linkText="Read Latest Blogs"
             delay={0.1}
+            gradient="bg-gradient-to-br from-blue-500 to-blue-600"
           />
           
           <ResourceCategory 
@@ -97,6 +114,7 @@ const ResourcesPreview = () => {
             href="/resources/news" 
             linkText="View News"
             delay={0.2}
+            gradient="bg-gradient-to-br from-purple-500 to-purple-600"
           />
           
           <ResourceCategory 
@@ -106,6 +124,7 @@ const ResourcesPreview = () => {
             href="/resources/portfolio" 
             linkText="Explore Portfolio"
             delay={0.3}
+            gradient="bg-gradient-to-br from-emerald-500 to-emerald-600"
           />
           
           <ResourceCategory 
@@ -115,35 +134,46 @@ const ResourcesPreview = () => {
             href="/resources/case-study" 
             linkText="Read Case Studies"
             delay={0.4}
+            gradient="bg-gradient-to-br from-amber-500 to-amber-600"
           />
         </div>
         
         {/* Featured Content Preview */}
         <motion.div 
-          className="mt-16 bg-white/5 backdrop-blur-md rounded-xl overflow-hidden shadow-lg"
+          className="mt-20 bg-white/5 backdrop-blur-lg rounded-3xl overflow-hidden border border-white/10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-3">
-            <img 
-              src={featured.imageUrl || "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=1200&q=80"} 
-              alt={featured.title} 
-              className="w-full h-64 lg:h-full object-cover"
-            />
-            <div className="p-8 lg:col-span-2">
-              <div className="text-sm text-accent-light font-medium mb-2">FEATURED {featured.type.toUpperCase().replace('-', ' ')}</div>
-              <h3 className="text-2xl font-bold mb-4">{featured.title}</h3>
-              <p className="opacity-90 mb-6">
+            <div className="relative">
+              <img 
+                src={featured.imageUrl || "/assets/images/resources/default-featured.jpg"} 
+                alt={featured.title} 
+                className="w-full h-full object-cover aspect-[4/3] lg:aspect-auto"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1C] via-transparent to-transparent opacity-60"></div>
+            </div>
+            <div className="p-8 lg:p-12 lg:col-span-2">
+              <div className="inline-block px-4 py-1 rounded-full bg-white/10 text-blue-400 text-sm font-medium mb-4">
+                FEATURED {featured.type.toUpperCase().replace('-', ' ')}
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">{featured.title}</h3>
+              <p className="text-gray-300 mb-6 leading-relaxed line-clamp-5">
                 {featured.description}
               </p>
-              <div className="flex flex-wrap gap-3 mb-6">
+              <div className="flex flex-wrap gap-3 mb-8">
                 {featured.tags?.map((tag, index) => (
-                  <span key={index} className="bg-white/10 text-xs py-1 px-3 rounded-full">{tag}</span>
+                  <span 
+                    key={index} 
+                    className="bg-white/10 text-gray-300 text-xs py-1.5 px-4 rounded-full border border-white/10 hover:border-white/20 transition-colors"
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
-              <Link href={`/resources/${featured.id}`}>
-                <span className="inline-flex items-center bg-white text-primary font-medium py-2 px-6 rounded-full transition-colors hover:bg-opacity-90 cursor-pointer">
+              <Link href={`/resources/${featured.type}`}>
+                <span className="inline-flex items-center bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 hover:scale-105">
                   Read Full {featured.type.replace('-', ' ')}
                   <i className="fas fa-arrow-right ml-2"></i>
                 </span>

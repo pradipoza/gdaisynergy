@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "next-themes";
 import { useEffect } from "react";
+import PageLayout from "@/components/layout/PageLayout";
 
 import HomePage from "@/pages/home-page";
 import ServicesPage from "@/pages/services-page";
@@ -31,20 +32,29 @@ import AdminUsers from "@/pages/admin/users";
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
 
+// Wrap public routes with PageLayout
+const PublicRoute = ({ component: Component }: { component: () => React.JSX.Element }) => {
+  return (
+    <PageLayout>
+      <Component />
+    </PageLayout>
+  );
+};
+
 function Router() {
   return (
     <Switch>
       {/* Public Routes */}
-      <Route path="/" component={HomePage} />
-      <Route path="/services" component={ServicesPage} />
-      <Route path="/services/:id" component={ServiceDetailPage} />
-      <Route path="/solutions" component={SolutionsPage} />
-      <Route path="/solutions/:id" component={SolutionDetailPage} />
-      <Route path="/resources" component={ResourcesPage} />
-      <Route path="/resources/:type" component={ResourcesPage} />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/contact" component={ContactPage} />
-      <Route path="/lets-discuss" component={LetsDiscussPage} />
+      <Route path="/" component={() => <PublicRoute component={HomePage} />} />
+      <Route path="/services" component={() => <PublicRoute component={ServicesPage} />} />
+      <Route path="/services/:id" component={() => <PublicRoute component={ServiceDetailPage} />} />
+      <Route path="/solutions" component={() => <PublicRoute component={SolutionsPage} />} />
+      <Route path="/solutions/:id" component={() => <PublicRoute component={SolutionDetailPage} />} />
+      <Route path="/resources" component={() => <PublicRoute component={ResourcesPage} />} />
+      <Route path="/resources/:type" component={() => <PublicRoute component={ResourcesPage} />} />
+      <Route path="/about" component={() => <PublicRoute component={AboutPage} />} />
+      <Route path="/contact" component={() => <PublicRoute component={ContactPage} />} />
+      <Route path="/lets-discuss" component={() => <PublicRoute component={LetsDiscussPage} />} />
       <Route path="/auth" component={AuthPage} />
       
       {/* Admin Routes - Protected */}

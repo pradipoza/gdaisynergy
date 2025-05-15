@@ -17,10 +17,28 @@ import {
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
+// Add types for service and solution
+type Service = {
+  id: string;
+  title: string;
+  // ... other fields if needed
+};
+
+type Solution = {
+  id: string;
+  title: string;
+  // ... other fields if needed
+};
+
+type DropdownItem = {
+  label: string;
+  href: string;
+};
+
 type NavItemProps = {
   label: string;
   href: string;
-  items?: { label: string; href: string }[];
+  items?: DropdownItem[];
 };
 
 const NavItem = ({ label, href, items }: NavItemProps) => {
@@ -29,23 +47,26 @@ const NavItem = ({ label, href, items }: NavItemProps) => {
 
   if (items) {
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className={`font-medium flex items-center gap-1 transition-colors ${isActive ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}>
-            {label}
-            <ChevronDown className="h-4 w-4" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
+      <div className="group relative">
+        <Link 
+          href={href}
+          className={`font-medium flex items-center gap-1 transition-colors ${isActive ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}
+        >
+          {label}
+          <ChevronDown className="h-4 w-4" />
+        </Link>
+        <div className="absolute left-0 top-full hidden group-hover:block w-48 bg-white shadow-lg rounded-md py-2">
           {items.map((item) => (
-            <DropdownMenuItem key={item.href} asChild>
-              <Link href={item.href} className="w-full">
-                {item.label}
-              </Link>
-            </DropdownMenuItem>
+            <Link 
+              key={item.href} 
+              href={item.href}
+              className="block px-4 py-2 text-sm text-neutral-800 hover:bg-neutral-100 hover:text-primary"
+            >
+              {item.label}
+            </Link>
           ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </div>
+      </div>
     );
   }
 
@@ -68,17 +89,25 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { user, logoutMutation } = useAuth();
   
-  // Get services list for the dropdown
-  const { data: services } = useQuery({
+  // Fetch services and solutions for the dropdowns with proper types
+  const { data: services = [] } = useQuery<Service[]>({
     queryKey: ["/api/services"],
-    enabled: false, // Only load on demand
   });
   
-  // Get solutions list for the dropdown
-  const { data: solutions } = useQuery({
+  const { data: solutions = [] } = useQuery<Solution[]>({
     queryKey: ["/api/solutions"],
-    enabled: false, // Only load on demand
   });
+
+  // Transform services and solutions into dropdown items using their titles
+  const serviceItems: DropdownItem[] = services.map((service: Service) => ({
+    label: service.title,
+    href: `/services/${service.id}`
+  }));
+
+  const solutionItems: DropdownItem[] = solutions.map((solution: Solution) => ({
+    label: solution.title,
+    href: `/solutions/${solution.id}`
+  }));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,10 +127,12 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold">
-                <span className="text-xl">N</span>
-              </div>
-              <span className="text-xl font-bold text-primary">NepalAI</span>
+              <img 
+                src="/assets/logo.png" 
+                alt="GD AI Synergy Logo" 
+                className="h-10 w-auto rounded-lg"
+              />
+              <span className="text-xl font-bold text-primary">GD AI Synergy</span>
             </Link>
           </div>
           
@@ -111,22 +142,12 @@ const Navbar = () => {
             <NavItem 
               label="Services" 
               href="/services" 
-              items={[
-                { label: "AI Automation Agency", href: "/services/1" },
-                { label: "AI Software Development", href: "/services/2" },
-                { label: "AI Consulting", href: "/services/3" },
-                { label: "Custom AI Solutions", href: "/services/4" },
-              ]}
+              items={serviceItems}
             />
             <NavItem 
               label="Solutions" 
               href="/solutions" 
-              items={[
-                { label: "Enterprise AI", href: "/solutions/1" },
-                { label: "Healthcare AI", href: "/solutions/2" },
-                { label: "Retail AI Solutions", href: "/solutions/3" },
-                { label: "Financial AI", href: "/solutions/4" },
-              ]}
+              items={solutionItems}
             />
             <NavItem 
               label="Resources" 
@@ -203,8 +224,39 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t border-neutral-200">
           <div className="py-2 px-4 space-y-3">
             <Link href="/" className="block py-2 text-neutral-800 font-medium">Home</Link>
-            <Link href="/services" className="block py-2 text-neutral-800 font-medium">Services</Link>
-            <Link href="/solutions" className="block py-2 text-neutral-800 font-medium">Solutions</Link>
+            
+            {/* Services Dropdown */}
+            <div className="py-2">
+              <div className="font-medium text-neutral-800 mb-2">Services</div>
+              <div className="pl-4 space-y-2">
+                {serviceItems.map((item: DropdownItem) => (
+                  <Link 
+                    key={item.href}
+                    href={item.href}
+                    className="block py-1 text-neutral-600 hover:text-primary"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            
+            {/* Solutions Dropdown */}
+            <div className="py-2">
+              <div className="font-medium text-neutral-800 mb-2">Solutions</div>
+              <div className="pl-4 space-y-2">
+                {solutionItems.map((item: DropdownItem) => (
+                  <Link 
+                    key={item.href}
+                    href={item.href}
+                    className="block py-1 text-neutral-600 hover:text-primary"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            
             <Link href="/resources" className="block py-2 text-neutral-800 font-medium">Resources</Link>
             <Link href="/about" className="block py-2 text-neutral-800 font-medium">About Us</Link>
             <Link href="/contact" className="block py-2 text-neutral-800 font-medium">Contact</Link>
